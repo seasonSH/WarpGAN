@@ -24,9 +24,7 @@ import numpy as np
 import tensorflow.contrib.slim as slim
 from tensorflow.contrib.layers import instance_norm, layer_norm
 
-# import nntools.tensorflow.watcher as tfwatcher
-
-from nets.sparse_image_warp import sparse_image_warp
+from models.sparse_image_warp import sparse_image_warp
 
 
 batch_norm_params = {

@@ -20,8 +20,8 @@ from __future__ import print_function
 import tensorflow as tf
 import numpy as np
 
-from nets import dense_image_warp
-from nets import interpolate_spline
+from models import dense_image_warp
+from models import interpolate_spline
 
 from tensorflow.python.framework import constant_op
 from tensorflow.python.framework import ops
