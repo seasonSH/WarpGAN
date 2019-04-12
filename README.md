@@ -13,7 +13,8 @@ Currently this repo is compatible with Tensorflow r1.9.
 ## <img src="https://image.flaticon.com/icons/svg/149/149366.svg" width="25"/> News
 | Date     | Update |
 |----------|--------|
-| 2019-04-07 | Initial Training Code |
+| 2019-04-11 | Test Code |
+| 2019-04-07 | Training Code |
 | 2019-04-05 | Initial Code Upload |
 
 ## <img src="https://image.flaticon.com/icons/svg/182/182321.svg" width="25"/> Citation
@@ -31,7 +32,5 @@ TODO
 
 
 ## <img src="https://image.flaticon.com/icons/svg/48/48541.svg" width="25"/> Pre-trained Model
-TODO
-
-
-
+Discriminator Initializaiton: [Google Drive](https://drive.google.com/open?id=1hcxr7yCiS8om59deMrRXFBYNJSrKtqNT)
+WarpGAN: [Google Drive](https://drive.google.com/open?id=1XwjMGcYIg2qwEKHsC7uSmZayHvnEFhyg)

@@ -2,7 +2,7 @@
 """
 # MIT License
 # 
-# Copyright (c) 2018 Yichun Shi
+# Copyright (c) 2019 Yichun Shi
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -56,11 +56,8 @@ class Dataset():
         self.classes = None
         self.images = None
         self.labels = None
-        self.features = None
         self.is_photo = None
         self.idx2cls = None
-        self.index_queue = None
-        self.index_worker = None
         self.batch_queue = None
         self.batch_workers = None
 
@@ -119,8 +116,6 @@ class Dataset():
         subset = type(self)()
         subset.images = self.images[indices]
         subset.labels = self.labels[indices]
-        if self.features is not None:
-            subset.features = self.features[indices]
         if new_labels:
             _, subset.labels = np.unique(subset.labels, return_inverse=True)
         subset.init_classes()
@@ -130,21 +125,9 @@ class Dataset():
 
 
     # Data Loading
-    def init_index_queue(self, batch_format):
-        if self.index_queue is None:
-            self.index_queue = Queue()
-        
-        if batch_format in ['random_samples'] \
-            or batch_format.startswith('random_samples_with_mates'):
-            size = self.images.shape[0]
-            index_queue = np.random.permutation(size)[:,None]
-        else:
-            raise ValueError('IndexQueue: Unknown batch_format: {}!'.format(batch_format))
-        for idx in list(index_queue):
-            self.index_queue.put(idx)
 
-    def get_batch(self, batch_size, batch_format, indices_only=False):
-        ''' Get the indices from index queue and fetch the data with indices.'''
+    def get_batch(self, batch_size):
+        ''' Get random pairs of photos and caricatures. '''
         indices_batch = []
         
         # Random photo-caricature pair
@@ -162,29 +145,13 @@ class Dataset():
         return batch
 
     # Multithreading preprocessing images
-    def start_index_queue(self, batch_format):
-        if not (batch_format in ['random_samples'] or \
-            batch_format.startswith('random_samples_with_mates')):
-            return
-        self.index_queue = Queue()
-        def index_queue_worker():
-            while True:
-                if self.index_queue.empty():
-                    self.init_index_queue(batch_format)
-                time.sleep(0.01)
-        self.index_worker = Process(target=index_queue_worker)
-        self.index_worker.daemon = True
-        self.index_worker.start()
-
-    def start_batch_queue(self, batch_size, batch_format, proc_func=None, maxsize=1, num_threads=3):
-        if self.index_queue is None:
-            self.start_index_queue(batch_format)
+    def start_batch_queue(self, batch_size, proc_func=None, maxsize=1, num_threads=3):
 
         self.batch_queue = Queue(maxsize=maxsize)
         def batch_queue_worker(seed):
             np.random.seed(seed)
             while True:
-                batch = self.get_batch(batch_size, batch_format)
+                batch = self.get_batch(batch_size)
                 if proc_func is not None:
                     batch['image_paths'] = batch['images']
                     batch['images'] = proc_func(batch['image_paths'])
@@ -201,14 +168,8 @@ class Dataset():
         return self.batch_queue.get(block=True, timeout=timeout)
       
     def release_queue(self):
-        if self.index_queue is not None:
-            self.index_queue.close()
         if self.batch_queue is not None:
             self.batch_queue.close()
-        if self.index_worker is not None:
-            self.index_worker.terminate()   
-            del self.index_worker
-            self.index_worker = None
         if self.batch_workers is not None:
             for w in self.batch_workers:
                 w.terminate()

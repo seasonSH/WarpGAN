@@ -69,9 +69,6 @@ optimizer = ("ADAM", {'beta1': 0.5, 'beta2': 0.9})
 # Number of samples per batch
 batch_size = 2
 
-# The structure of the batch
-batch_format = 'random_pc_pair'
-
 # Number of batches per epoch
 epoch_size = 5000
 
@@ -89,21 +86,11 @@ learning_rate_schedule = {
     'end_step': 100000,
 }
 
-# Multiply the learning rate for variables that contain certain keywords
-learning_rate_multipliers = {
-}
-
 # Restore model
 restore_model = "pretrained/discriminator_casia_256/"
 
 # Keywords to filter restore variables, set None for all
 restore_scopes =  ['Discriminator/conv', 'Discriminator/Bot']
-
-# Replace rules for restoration
-replace_rules = {
-    # 'Discriminator': 'SphereNet',
-    # 'FeatureNet': 'Discriminator',
-}
 
 # Weight decay for model variables
 weight_decay = 1e-4
@@ -114,9 +101,11 @@ keep_prob = 1.0
 
 ####### LOSS FUNCTION #######
 
-losses = {
-    'coef_adv': 1.0,
-    'coef_patch_adv': 2.0,
-    'coef_idt': 10.0,
-}
+# Weight of the global adversarial loss
+coef_adv = 1.0
 
+# Weight of the patch adversarial loss
+coef_patch_adv = 2.0
+
+# Weight of the identity mapping loss
+coef_idt = 10.0

@@ -90,7 +90,6 @@ def display_info(epoch, step, duration, watch_list):
             sys.stdout.write('   %s: %d' % (item[0], item[1]))
     sys.stdout.write('\n')
 
-
 def save_manifold(images, path):
     images = (images+1.) / 2
     manifold_size = image_manifold_size(images.shape[0])

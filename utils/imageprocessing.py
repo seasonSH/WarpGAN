@@ -2,7 +2,7 @@
 """
 # MIT License
 # 
-# Copyright (c) 2018 Yichun Shi
+# Copyright (c) 2017 Yichun Shi
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -229,6 +229,9 @@ def preprocess(images, config, is_training=False):
         for image_path in image_paths:
             images.append(misc.imread(image_path, mode=mode))
         images = np.stack(images, axis=0)
+    else:
+        assert type(images) == np.ndarray
+        assert images.ndim == 4
 
     # Process images
     proc_funcs = config.preprocess_train if is_training else config.preprocess_test

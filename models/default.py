@@ -69,7 +69,7 @@ def deconv(x, *args, pad=1, **kwargs):
         return slim.conv2d_transpose(x, *args, **kwargs)
 
 
-def discriminator(images, num_classes, bottleneck_size=512, phase_train=True,
+def discriminator(images, num_classes, bottleneck_size=512, keep_prob=1.0, phase_train=True,
             weight_decay=0.0, reuse=None, scope='Discriminator'):
     with slim.arg_scope([slim.conv2d, slim.fully_connected],
                         weights_regularizer=slim.l2_regularizer(weight_decay),
@@ -118,7 +118,7 @@ def discriminator(images, num_classes, bottleneck_size=512, phase_train=True,
                 return patch_logits, logits
 
 
-def encoder(images, style_size=8, phase_train=True, weight_decay=0.0, reuse=None, scope='Encoders'):
+def encoder(images, style_size=8, keep_prob=1.0, phase_train=True, weight_decay=0.0, reuse=None, scope='Encoders'):
     with tf.variable_scope(scope, reuse=reuse):
         with slim.arg_scope([slim.conv2d, slim.conv2d_transpose, slim.fully_connected],
                         activation_fn=tf.nn.relu,
@@ -189,7 +189,7 @@ def encoder(images, style_size=8, phase_train=True, weight_decay=0.0, reuse=None
 
 
 def decoder(encoded, scales, styles, texture_only=False, style_size=8, image_size=(112,112),
-        phase_train=True, weight_decay=0.0, reuse=None, scope='Decoder'):
+        keep_prob=1.0, phase_train=True, weight_decay=0.0, reuse=None, scope='Decoder'):
     with tf.variable_scope(scope, reuse=reuse):
         with slim.arg_scope([slim.conv2d, slim.conv2d_transpose, slim.fully_connected],
                         activation_fn=tf.nn.relu,
