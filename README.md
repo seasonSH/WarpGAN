@@ -55,11 +55,17 @@ Currently this repo is compatible with Tensorflow r1.9.
     ```
 * For example, if you want to use the pre-trained model, download the model and unzip it into ```pretrained/warpgan_pretrained```. Then, run the following command to generate 5 images for captain marvel of different random styles:
     ```Shell
-    python test.py pretrained/warpgan_pretrained data/example/CaptainMarvel.jpg result/CaptainMarvel --num_styles 5
+    python test.py pretrained/warpgan_pretrained \
+    data/example/CaptainMarvel.jpg \
+    result/CaptainMarvel \
+    --num_styles 5
     ```
 * You can also change the warping extent by using the ```--scale``` argument. For example, the following command doubles the displacement of the warpping control points:
     ```Shell
-    python test.py pretrained/warpgan_pretrained data/example/CaptainMarvel.jpg result/CaptainMarvel --num_styles 5 --scale 2.0
+    python test.py pretrained/warpgan_pretrained \
+    data/example/CaptainMarvel.jpg \
+    result/CaptainMarvel \
+    --num_styles 5 --scale 2.0
     ```
 
 ## <img src="https://image.flaticon.com/icons/svg/48/48541.svg" width="25"/> Pre-trained Model
