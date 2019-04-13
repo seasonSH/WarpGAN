@@ -29,38 +29,38 @@ Currently this repo is compatible with Tensorflow r1.9.
 ## <img src="https://image.flaticon.com/icons/svg/1/1383.svg" width="25"/> Usage
 **Note:** In this section, we assume that you are always in the directory **`$WARPGAN_ROOT/`**
 ### Preprocessing
-Download the original images of [WebCaricature](https://cs.nju.edu.cn/rl/WebCaricature.htm) dataset and unzip them into ``data/WebCaricature/OriginalImages``. Rename the images by running
-``` python
+1. Download the original images of [WebCaricature](https://cs.nju.edu.cn/rl/WebCaricature.htm) dataset and unzip them into ``data/WebCaricature/OriginalImages``. Rename the images by running
+    ``` Shell
     python data/rename.py
-```
-Then, normalize all the faces by running the following code:
-``` python
+    ```
+2. Then, normalize all the faces by running the following code:
+    ``` Shell
     python align/align_dataset.py data/landmarks.txt data/webcaricacture_aligned_256 --scale 0.7
-```
-The command will normalize all the photos and caricatures using the landmark points pre-defined in the WebCaricature protocol (we use only 5 landmarks). Notice that during deployment, we will use MTCNN to detect the face landmarks for images not in the dataset.
+    ```
+    The command will normalize all the photos and caricatures using the landmark points pre-defined in the WebCaricature protocol (we use only 5 landmarks). Notice that during deployment, we will use MTCNN to detect the face landmarks for images not in the dataset.
 
 ### Training
-Before training, you need to download the [discriminator model](https://drive.google.com/open?id=1hcxr7yCiS8om59deMrRXFBYNJSrKtqNT) to initialize the parameters of the disrcimanator, which is pre-trained as an identity classifier. Unzip the files under ```pretrained/discriminator_casia_256/```.
+1. Before training, you need to download the [discriminator model](https://drive.google.com/open?id=1hcxr7yCiS8om59deMrRXFBYNJSrKtqNT) to initialize the parameters of the disrcimanator, which is pre-trained as an identity classifier. Unzip the files under ```pretrained/discriminator_casia_256/```.
 
-The configuration files for training are saved under ```config/``` folder, where you can define the dataset prefix, training list, model file and other hyper-parameters. Use the following command to run the default training configuration:
-``` python
+2. The configuration files for training are saved under ```config/``` folder, where you can define the dataset prefix, training list, model file and other hyper-parameters. Use the following command to run the default training configuration:
+    ``` Shell
     python train.py config/default.py
-```
-The command will create an folder under ```log/default/``` which saves all the checkpoints, test samples and summaries. The model directory is named as the time you start training.
+    ```
+    The command will create an folder under ```log/default/``` which saves all the checkpoints, test samples and summaries. The model directory is named as the time you start training.
 
 ### Testing
-Run the test code in the following format:
-```python
+* Run the test code in the following format:
+    ```Shell
     python test.py /path/to/model/dir /path/to/input/image /prefix/of/output/image
-```
-For example, if you want to use the pre-trained model, download the model and unzip it into ```pretrained/warpgan_pretrained```. Then, run the following command to generate 5 images for captain marvel of different random styles:
-```python
+    ```
+* For example, if you want to use the pre-trained model, download the model and unzip it into ```pretrained/warpgan_pretrained```. Then, run the following command to generate 5 images for captain marvel of different random styles:
+    ```Shell
     python test.py pretrained/warpgan_pretrained data/example/CaptainMarvel.jpg result/CaptainMarvel --num_styles 5
-```
-You can also change the warping extent by using the ```--scale``` argument. For example, the following command doubles the displacement of the warpping control points:
-```python
+    ```
+* You can also change the warping extent by using the ```--scale``` argument. For example, the following command doubles the displacement of the warpping control points:
+    ```Shell
     python test.py pretrained/warpgan_pretrained data/example/CaptainMarvel.jpg result/CaptainMarvel --num_styles 5 --scale 2.0
-```
+    ```
 
 ## <img src="https://image.flaticon.com/icons/svg/48/48541.svg" width="25"/> Pre-trained Model
 ##### Discriminator Initializaiton: 
