@@ -102,7 +102,9 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-legacy
+legacy/
 log/
 pretrained/
-result/
+result/*
+data/WebCaricature
+data/webcaricature_aligned_256

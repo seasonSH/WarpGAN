@@ -7,7 +7,7 @@ import os
 ####### INPUT OUTPUT #######
 
 # The name of the current model for output
-name = 'warpgan'
+name = 'default'
 
 # The folder to save log and model
 log_base_dir = './log/'
@@ -19,7 +19,8 @@ save_model = True
 summary_interval = 100
 
 # Prefix to the image files
-data_prefix = os.environ["DATABASES2"] + "/caricature/WebCaricature/webcaric_5ptaligned_sc0.7_256/"
+# data_prefix = os.environ["DATABASES2"] + "/caricature/WebCaricature/webcaric_5ptaligned_sc0.7_256/"
+data_prefix = "data/webcaricature_aligned_256/"
 
 # Training data list
 train_dataset_path = "./data/train.txt"
@@ -53,7 +54,7 @@ num_gpus = 1
 # The network architecture
 network = 'models/default.py'
 
-# Dimensionality of the bottleneck layer
+# Dimensionality of the bottleneck layer in discriminator
 bottleneck_size = 512
 
 # Dimensionality of the style space
