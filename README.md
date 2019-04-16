@@ -2,7 +2,7 @@
 
 By Yichun Shi, Debayan Deb and Anil K. Jain
 
-<img src="https://raw.githubusercontent.com/seasonSH/WarpGAN/master/assets/caricatureme.png" width="100%">
+<a href="http://caricaturize.me"><img src="https://raw.githubusercontent.com/seasonSH/WarpGAN/master/assets/caricatureme.png" width="100%"></a>
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Tensorflow_logo.svg/1000px-Tensorflow_logo.svg.png" align="right" width="100"/>
 
